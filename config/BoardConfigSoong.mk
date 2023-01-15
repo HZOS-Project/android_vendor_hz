@@ -38,6 +38,8 @@ SOONG_CONFIG_hzGlobalVars += \
     gralloc_handle_has_reserved_size \
     has_legacy_camera_hal1 \
     needs_camera_boottime \
+    uses_oplus_camera \
+    uses_nothing_camera \
     target_alternative_futex_waiters \
     camera_uses_newer_hidl_override_format \
     target_health_charging_control_charging_path \
@@ -96,6 +98,8 @@ SOONG_CONFIG_hzGlobalVars_gralloc_handle_has_custom_content_md_reserved_size := 
 SOONG_CONFIG_hzGlobalVars_camera_override_format_from_reserved := $(TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED)
 SOONG_CONFIG_hzGlobalVars_gralloc_handle_has_ubwcp_format := $(TARGET_GRALLOC_HANDLE_HAS_UBWCP_FORMAT)
 SOONG_CONFIG_hzGlobalVars_has_legacy_camera_hal1 := $(TARGET_HAS_LEGACY_CAMERA_HAL1)
+SOONG_CONFIG_hzGlobalVars_uses_oplus_camera := $(TARGET_USES_OPLUS_CAMERA)
+SOONG_CONFIG_hzGlobalVars_uses_nothing_camera := $(TARGET_USES_NOTHING_CAMERA)
 
 # Set default values
 BOOTLOADER_MESSAGE_OFFSET ?= 0
