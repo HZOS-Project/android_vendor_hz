@@ -41,6 +41,7 @@ SOONG_CONFIG_hzGlobalVars += \
     has_legacy_camera_hal1 \
     needs_camera_boottime \
     uses_oplus_camera \
+    uses_oppo_camera \
     uses_nothing_camera \
     target_alternative_futex_waiters \
     camera_uses_newer_hidl_override_format \
@@ -104,6 +105,7 @@ SOONG_CONFIG_hzGlobalVars_uses_oplus_camera := $(TARGET_USES_OPLUS_CAMERA)
 SOONG_CONFIG_hzGlobalVars_uses_nothing_camera := $(TARGET_USES_NOTHING_CAMERA)
 SOONG_CONFIG_hzGlobalVars_camera_needs_miui_camera_mode_support := $(TARGET_USES_MIUI_CAMERA)
 SOONG_CONFIG_hzGlobalVars_camera_needs_camera_needs_depth_sensor_override := $(TARGET_USES_DEPTHSENSOR_OVERRIDE)
+SOONG_CONFIG_hzGlobalVars_uses_oppo_camera := $(TARGET_USES_OPPO_CAMERA)
 
 # Set default values
 BOOTLOADER_MESSAGE_OFFSET ?= 0
