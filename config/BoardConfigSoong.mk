@@ -58,7 +58,8 @@ SOONG_CONFIG_hzGlobalVars += \
     target_trust_usb_control_path \
     target_trust_usb_control_enable \
     target_trust_usb_control_disable \
-    needs_oplus_tag
+    needs_oplus_tag \
+    include_miui_camera
 
 SOONG_CONFIG_NAMESPACES += hzNvidiaVars
 SOONG_CONFIG_hzNvidiaVars += \
@@ -85,6 +86,7 @@ SOONG_CONFIG_hzGlobalVars_camera_uses_newer_hidl_override_format := $(TARGET_CAM
 SOONG_CONFIG_hzGlobalVars_uses_egl_display_array := $(TARGET_USES_EGL_DISPLAY_ARRAY)
 SOONG_CONFIG_hzGlobalVars_target_uses_prebuilt_dynamic_partitions := $(TARGET_USES_PREBUILT_DYNAMIC_PARTITIONS)
 SOONG_CONFIG_hzGlobalVars_needs_oplus_tag := $(TARGET_NEEDS_OPLUS_VENDOR_TAG)
+SOONG_CONFIG_hzGlobalVars_include_miui_camera := $(TARGET_INCLUDES_MIUI_CAMERA)
 SOONG_CONFIG_hzNvidiaVars_uses_nvidia_enhancements := $(NV_ANDROID_FRAMEWORK_ENHANCEMENTS)
 SOONG_CONFIG_hzQcomVars_supports_extended_compress_format := $(AUDIO_FEATURE_ENABLED_EXTENDED_COMPRESS_FORMAT)
 SOONG_CONFIG_hzQcomVars_uses_pre_uplink_features_netmgrd := $(TARGET_USES_PRE_UPLINK_FEATURES_NETMGRD)
