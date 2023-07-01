@@ -30,6 +30,8 @@ SOONG_CONFIG_hzGlobalVars += \
     camera_needs_client_info \
     camera_needs_client_info_lib \
     camera_needs_client_info_lib_oplus \
+    camera_needs_miui_camera_mode_support \
+    camera_needs_camera_needs_depth_sensor_override \
     disable_bluetooth_le_read_buffer_size_v2 \
     disable_bluetooth_le_set_host_feature \
     bootloader_message_offset \
@@ -100,6 +102,8 @@ SOONG_CONFIG_hzGlobalVars_gralloc_handle_has_ubwcp_format := $(TARGET_GRALLOC_HA
 SOONG_CONFIG_hzGlobalVars_has_legacy_camera_hal1 := $(TARGET_HAS_LEGACY_CAMERA_HAL1)
 SOONG_CONFIG_hzGlobalVars_uses_oplus_camera := $(TARGET_USES_OPLUS_CAMERA)
 SOONG_CONFIG_hzGlobalVars_uses_nothing_camera := $(TARGET_USES_NOTHING_CAMERA)
+SOONG_CONFIG_hzGlobalVars_camera_needs_miui_camera_mode_support := $(TARGET_USES_MIUI_CAMERA)
+SOONG_CONFIG_hzGlobalVars_camera_needs_camera_needs_depth_sensor_override := $(TARGET_USES_DEPTHSENSOR_OVERRIDE)
 
 # Set default values
 BOOTLOADER_MESSAGE_OFFSET ?= 0
