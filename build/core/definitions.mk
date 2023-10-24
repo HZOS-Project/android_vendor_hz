@@ -4,6 +4,3 @@ endef
 
 # Include board/platform macros
 include vendor/hz/build/core/utils.mk
-
-# Include vendor platform definitions
-include vendor/hz/build/core/vendor/*.mk
