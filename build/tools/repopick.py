@@ -2,7 +2,6 @@
 #
 # Copyright (C) 2013-15 The CyanogenMod Project
 #           (C) 2017    The LineageOS Project
-#           (C) 2018    The PixelExperience Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -72,7 +71,7 @@ def fetch_query_via_ssh(remote_url, query):
     elif remote_url.count(':') == 1:
         (uri, userhost) = remote_url.split(':')
         userhost = userhost[2:]
-        port = 29419
+        port = 29458
     else:
         raise Exception('Malformed URI: Expecting ssh://[user@]host[:port]')
 
@@ -153,18 +152,13 @@ def fetch_query(remote_url, query):
         raise Exception('Gerrit URL should be in the form http[s]://hostname/ or ssh://[user@]host[:port]')
 
 
-def get_private_gerrit_url():
-    cmd = ['git config --get review.gerrit-staging.pixelexperience.org.username']
-    username = subprocess.check_output(cmd, shell=True).decode("utf-8").strip()
-    return 'ssh://{0}@gerrit-staging.pixelexperience.org:29419'.format(username)
-
 if __name__ == '__main__':
-    # Default to PixelExperience Gerrit
-    default_gerrit = 'https://gerrit-staging.pixelexperience.org'
+    # Default to Gerrit
+    default_gerrit = ''
 
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, description=textwrap.dedent('''\
         repopick.py is a utility to simplify the process of cherry picking
-        patches from PixelExperience's Gerrit instance (or any gerrit instance of your choosing)
+        patches from Gerrit instance (or any gerrit instance of your choosing)
 
         Given a list of change numbers, repopick will cd into the project path
         and cherry pick the latest patch available.
@@ -240,7 +234,7 @@ if __name__ == '__main__':
         for pline in plist.splitlines():
             matchObj = re.match(r'Local Branches.*\[(.*)\]', pline)
             if matchObj:
-                local_branches = re.split(r'\s*,\s*', matchObj.group(1))
+                local_branches = re.split('\s*,\s*', matchObj.group(1))
                 if any(args.start_branch[0] in s for s in local_branches):
                     needs_abandon = True
 
@@ -265,9 +259,9 @@ if __name__ == '__main__':
     # {project: {path, revision}}
 
     for project in projects:
-        name = project.get('name')
+        name = project.get('name').replace("HZOS-Project/", "")
         # when name and path are equal, "repo manifest" doesn't return a path at all, so fall back to name
-        path = project.get('path', name)
+        path = project.get('path', name).replace("HZOS-Project/", "")
         revision = project.get('upstream')
         if revision is None:
             for remote in remotes:
@@ -306,7 +300,7 @@ if __name__ == '__main__':
         reviews = fetch_query(args.gerrit, args.query)
         change_numbers = [str(r['number']) for r in sorted(reviews, key=cmp_to_key(cmp_reviews))]
     if args.change_number:
-        change_url_re = re.compile(r'https?://.+?/([0-9]+(?:/[0-9]+)?)/?')
+        change_url_re = re.compile('https?://.+?/([0-9]+(?:/[0-9]+)?)/?')
         for c in args.change_number:
             change_number = change_url_re.findall(c)
             if change_number:
@@ -347,7 +341,7 @@ if __name__ == '__main__':
 
         mergables.append({
             'subject': review['subject'],
-            'project': review['project'],
+            'project': review['project'].replace("HZOS-Project/", ""),
             'branch': review['branch'],
             'change_id': review['change_id'],
             'change_number': review['number'],
@@ -379,6 +373,7 @@ if __name__ == '__main__':
         # Convert the project name to a project path
         #   - check that the project path exists
         project_path = None
+        item['project'].replace("HZOS-Project/", "")
 
         if item['project'] in project_name_to_data and item['branch'] in project_name_to_data[item['project']]:
             project_path = project_name_to_data[item['project']][item['branch']]
@@ -403,8 +398,7 @@ if __name__ == '__main__':
 
         # Determine the maximum commits to check already picked changes
         check_picked_count = args.check_picked
-        max_count = '--max-count={0}'.format(check_picked_count + 1)
-        branch_commits_count = int(subprocess.check_output(['git', 'rev-list', '--count', max_count, 'HEAD'], cwd=project_path))
+        branch_commits_count = int(subprocess.check_output(['git', 'rev-list', '--count', 'HEAD'], cwd=project_path))
         if branch_commits_count <= check_picked_count:
             check_picked_count = branch_commits_count - 1
 
@@ -433,7 +427,7 @@ if __name__ == '__main__':
 
         # Print out some useful info
         if not args.quiet:
-            print('--> Subject:       "{0}"'.format(item['subject'].encode('utf-8')))
+            print(u'--> Subject:       "{0}"'.format(item['subject']))
             print('--> Project path:  {0}'.format(project_path))
             print('--> Change number: {0} (Patch Set {1})'.format(item['id'], item['patchset']))
 
