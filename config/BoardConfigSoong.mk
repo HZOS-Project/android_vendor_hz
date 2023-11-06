@@ -41,6 +41,7 @@ SOONG_CONFIG_hzGlobalVars += \
     target_health_charging_control_supports_bypass \
     target_health_charging_control_supports_deadline \
     target_health_charging_control_supports_toggle \
+    has_legacy_camera_hal1 \
     target_init_vendor_lib \
     target_ld_shim_libs \
     target_surfaceflinger_udfps_lib \
@@ -69,6 +70,7 @@ endif
 SOONG_CONFIG_hzGlobalVars_camera_override_format_from_reserved := $(TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED)
 SOONG_CONFIG_hzGlobalVars_gralloc_handle_has_custom_content_md_reserved_size := $(TARGET_GRALLOC_HANDLE_HAS_CUSTOM_CONTENT_MD_RESERVED_SIZE)
 SOONG_CONFIG_hzGlobalVars_gralloc_handle_has_reserved_size := $(TARGET_GRALLOC_HANDLE_HAS_RESERVED_SIZE)
+SOONG_CONFIG_hzGlobalVars_has_legacy_camera_hal1 := $(TARGET_HAS_LEGACY_CAMERA_HAL1)
 SOONG_CONFIG_hzGlobalVars_gralloc_handle_has_ubwcp_format := $(TARGET_GRALLOC_HANDLE_HAS_UBWCP_FORMAT)
 SOONG_CONFIG_hzGlobalVars_uses_egl_display_array := $(TARGET_USES_EGL_DISPLAY_ARRAY)
 SOONG_CONFIG_hzNvidiaVars_uses_nvidia_enhancements := $(NV_ANDROID_FRAMEWORK_ENHANCEMENTS)
