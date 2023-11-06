@@ -36,9 +36,17 @@ SOONG_CONFIG_hzGlobalVars += \
     camera_override_format_from_reserved \
     gralloc_handle_has_custom_content_md_reserved_size \
     gralloc_handle_has_reserved_size \
+    has_legacy_camera_hal1 \
     needs_camera_boottime \
     target_alternative_futex_waiters \
     camera_uses_newer_hidl_override_format \
+    target_health_charging_control_charging_path \
+    target_health_charging_control_charging_enabled \
+    target_health_charging_control_charging_disabled \
+    target_health_charging_control_deadline_path \
+    target_health_charging_control_supports_bypass \
+    target_health_charging_control_supports_deadline \
+    target_health_charging_control_supports_toggle \
     target_init_vendor_lib \
     target_inputdispatcher_skip_event_key \
     target_ld_shim_libs \
@@ -46,6 +54,10 @@ SOONG_CONFIG_hzGlobalVars += \
     target_uses_prebuilt_dynamic_partitions \
     uses_legacy_fd_fbdev \
     uses_egl_display_array \
+    uses_camera_parameter_lib \
+    target_trust_usb_control_path \
+    target_trust_usb_control_enable \
+    target_trust_usb_control_disable \
     needs_oplus_tag
 
 SOONG_CONFIG_NAMESPACES += hzNvidiaVars
@@ -80,6 +92,8 @@ SOONG_CONFIG_hzGlobalVars_uses_legacy_fd_fbdev := $(TARGET_USES_LEGACY_FD_FBDEV)
 SOONG_CONFIG_hzGlobalVars_gralloc_handle_has_reserved_size := $(TARGET_GRALLOC_HANDLE_HAS_RESERVED_SIZE)
 SOONG_CONFIG_hzGlobalVars_gralloc_handle_has_custom_content_md_reserved_size := $(TARGET_GRALLOC_HANDLE_HAS_CUSTOM_CONTENT_MD_RESERVED_SIZE)
 SOONG_CONFIG_hzGlobalVars_camera_override_format_from_reserved := $(TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED)
+SOONG_CONFIG_hzGlobalVars_gralloc_handle_has_ubwcp_format := $(TARGET_GRALLOC_HANDLE_HAS_UBWCP_FORMAT)
+SOONG_CONFIG_hzGlobalVars_has_legacy_camera_hal1 := $(TARGET_HAS_LEGACY_CAMERA_HAL1)
 
 # Set default values
 BOOTLOADER_MESSAGE_OFFSET ?= 0
@@ -87,9 +101,20 @@ TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS ?= 0
 TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED ?= false
 TARGET_GRALLOC_HANDLE_HAS_CUSTOM_CONTENT_MD_RESERVED_SIZE ?= false
 TARGET_GRALLOC_HANDLE_HAS_RESERVED_SIZE ?= false
+TARGET_GRALLOC_HANDLE_HAS_UBWCP_FORMAT ?= false
+TARGET_HEALTH_CHARGING_CONTROL_CHARGING_ENABLED ?= 1
+TARGET_HEALTH_CHARGING_CONTROL_CHARGING_DISABLED ?= 0
+TARGET_HEALTH_CHARGING_CONTROL_SUPPORTS_BYPASS ?= true
+TARGET_HEALTH_CHARGING_CONTROL_SUPPORTS_DEADLINE ?= false
+TARGET_HEALTH_CHARGING_CONTROL_SUPPORTS_TOGGLE ?= true
+TARGET_INCLUDES_MIUI_CAMERA ?= false
 TARGET_INIT_VENDOR_LIB ?= vendor_init
 TARGET_INPUTDISPATCHER_SKIP_EVENT_KEY ?= 0
+TARGET_SPECIFIC_CAMERA_PARAMETER_LIBRARY ?= libcamera_parameters
 TARGET_SURFACEFLINGER_UDFPS_LIB ?= surfaceflinger_udfps_lib
+TARGET_TRUST_USB_CONTROL_PATH ?= /proc/sys/kernel/deny_new_usb
+TARGET_TRUST_USB_CONTROL_ENABLE ?= 1
+TARGET_TRUST_USB_CONTROL_DISABLE ?= 0
 
 # Soong value variables
 SOONG_CONFIG_hzGlobalVars_aapt_version_code := $(shell date -u +%Y%m%d)
@@ -97,11 +122,21 @@ SOONG_CONFIG_hzGlobalVars_additional_gralloc_10_usage_bits := $(TARGET_ADDITIONA
 SOONG_CONFIG_hzGlobalVars_bootloader_message_offset := $(BOOTLOADER_MESSAGE_OFFSET)
 SOONG_CONFIG_hzGlobalVars_disable_bluetooth_le_read_buffer_size_v2 := $(TARGET_DISABLE_BLUETOOTH_LE_READ_BUFFER_SIZE_V2)
 SOONG_CONFIG_hzGlobalVars_disable_bluetooth_le_set_host_feature := $(TARGET_DISABLE_BLUETOOTH_LE_SET_HOST_FEATURE)
+SOONG_CONFIG_hzGlobalVars_target_health_charging_control_charging_path := $(TARGET_HEALTH_CHARGING_CONTROL_CHARGING_PATH)
+SOONG_CONFIG_hzGlobalVars_target_health_charging_control_charging_enabled := $(TARGET_HEALTH_CHARGING_CONTROL_CHARGING_ENABLED)
+SOONG_CONFIG_hzGlobalVars_target_health_charging_control_charging_disabled := $(TARGET_HEALTH_CHARGING_CONTROL_CHARGING_DISABLED)
+SOONG_CONFIG_hzGlobalVars_target_health_charging_control_deadline_path := $(TARGET_HEALTH_CHARGING_CONTROL_DEADLINE_PATH)
+SOONG_CONFIG_hzGlobalVars_target_health_charging_control_supports_bypass := $(TARGET_HEALTH_CHARGING_CONTROL_SUPPORTS_BYPASS)
+SOONG_CONFIG_hzGlobalVars_target_health_charging_control_supports_deadline := $(TARGET_HEALTH_CHARGING_CONTROL_SUPPORTS_DEADLINE)
+SOONG_CONFIG_hzGlobalVars_target_health_charging_control_supports_toggle := $(TARGET_HEALTH_CHARGING_CONTROL_SUPPORTS_TOGGLE)
 SOONG_CONFIG_hzGlobalVars_target_init_vendor_lib := $(TARGET_INIT_VENDOR_LIB)
 SOONG_CONFIG_hzGlobalVars_target_ld_shim_libs := $(subst $(space),:,$(TARGET_LD_SHIM_LIBS))
 SOONG_CONFIG_hzGlobalVars_target_surfaceflinger_udfps_lib := $(TARGET_SURFACEFLINGER_UDFPS_LIB)
 SOONG_CONFIG_hzGlobalVars_target_inputdispatcher_skip_event_key := $(TARGET_INPUTDISPATCHER_SKIP_EVENT_KEY)
-
+SOONG_CONFIG_hzGlobalVars_target_trust_usb_control_path := $(TARGET_TRUST_USB_CONTROL_PATH)
+SOONG_CONFIG_hzGlobalVars_target_trust_usb_control_enable := $(TARGET_TRUST_USB_CONTROL_ENABLE)
+SOONG_CONFIG_hzGlobalVars_target_trust_usb_control_disable := $(TARGET_TRUST_USB_CONTROL_DISABLE)
+SOONG_CONFIG_hzGlobalVars_uses_camera_parameter_lib := $(TARGET_SPECIFIC_CAMERA_PARAMETER_LIBRARY)
 ifneq ($(filter $(QSSI_SUPPORTED_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
 SOONG_CONFIG_hzQcomVars_qcom_display_headers_namespace := vendor/qcom/opensource/commonsys-intf/display
 else
