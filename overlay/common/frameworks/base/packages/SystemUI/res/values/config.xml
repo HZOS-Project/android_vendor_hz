@@ -19,8 +19,29 @@
 <!-- These resources are around just to allow their values to be customized
      for different hardware and product builds. -->
 <resources>
-    <!-- If true, enable the advance anti-falsing classifier on the lockscreen. On some devices it
-         does not work well, particularly with noisy touchscreens. Note that disabling it may
-         increase the rate of unintentional unlocks. -->
-    <bool name="config_lockscreenAntiFalsingClassifierEnabled">false</bool>
+     <!-- If true, enable the advance anti-falsing classifier on the lockscreen. On some devices it
+          does not work well, particularly with noisy touchscreens. Note that disabling it may
+          increase the rate of unintentional unlocks. -->
+     <bool name="config_lockscreenAntiFalsingClassifierEnabled">false</bool>
+
+     <!-- SystemUI Plugins that can be loaded on user builds. -->
+     <string-array name="config_pluginAllowlist">
+          <item>com.android.systemui</item>
+          <item>com.android.systemui.plugin.globalactions.wallet</item>
+          <item>com.android.systemui.falcon</item>
+          <item>com.android.systemui.falcon.debug</item>
+          <item>com.android.systemui.falcon.one</item>
+          <item>com.android.systemui.falcon.two</item>
+          <item>com.android.systemui.falcon.three</item>
+          <item>com.android.systemui.falcon.four</item>
+          <item>com.android.systemui.falcon.five</item>
+          <item>com.android.systemui.falcon.six</item>
+          <item>com.android.systemui.falcon.seven</item>
+          <item>com.android.systemui.falcon.eight</item>
+          <item>com.android.systemui.falcon.nine</item>
+     </string-array>
+     <string-array name="config_pluginWhitelist">
+          <item>com.android.systemui</item>
+          <item>com.android.systemui.plugin.globalactions.wallet</item>
+     </string-array>
 </resources>
